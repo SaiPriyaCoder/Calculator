@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Style Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+            margin: 0;
+        }
+        .calculator {
+            width: 100%;
+            max-width: 280px;
+            padding: 15px;
+            background: #000;
+            border-radius: 40px;
+            text-align: center;
+        }
+        .display {
+            width: 100%;
+            height: 80px;
+            font-size: 2.5em;
+            text-align: right;
+            padding: 15px;
+            border: none;
+            outline: none;
+            background: #000;
+            color: white;
+            border-radius: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+        button {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .gray { background: #505050; color: white; }
+        .dark-gray { background: #333; color: white; }
+        .orange { background: #ff9500; color: white; }
+        .wide {
+            grid-column: span 2;
+            width: 130px;
+            border-radius: 50px;
+        }
+        button:active { opacity: 0.7; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled value="0">
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="gray">AC</button>
+            <button onclick="toggleSign()" class="gray">+/−</button>
+            <button onclick="appendToDisplay('%')" class="gray">%</button>
+            <button onclick="appendToDisplay('/')" class="orange">÷</button>
+            <button onclick="appendToDisplay('7')" class="dark-gray">7</button>
+            <button onclick="appendToDisplay('8')" class="dark-gray">8</button>
+            <button onclick="appendToDisplay('9')" class="dark-gray">9</button>
+            <button onclick="appendToDisplay('*')" class="orange">×</button>
+            <button onclick="appendToDisplay('4')" class="dark-gray">4</button>
+            <button onclick="appendToDisplay('5')" class="dark-gray">5</button>
+            <button onclick="appendToDisplay('6')" class="dark-gray">6</button>
+            <button onclick="appendToDisplay('-')" class="orange">−</button>
+            <button onclick="appendToDisplay('1')" class="dark-gray">1</button>
+            <button onclick="appendToDisplay('2')" class="dark-gray">2</button>
+            <button onclick="appendToDisplay('3')" class="dark-gray">3</button>
+            <button onclick="appendToDisplay('+')" class="orange">+</button>
+            <button onclick="appendToDisplay('0')" class="dark-gray wide">0</button>
+            <button onclick="appendToDisplay('.')" class="dark-gray">.</button>
+            <button onclick="calculateResult()" class="orange">=</button>
+        </div>
+    </div>
+    <script>
+        function appendToDisplay(value) {
+            let display = document.getElementById('display');
+            if (display.value === '0') display.value = value;
+            else display.value += value;
+        }
+        function clearDisplay() {
+            document.getElementById('display').value = '0';
+        }
+        function calculateResult() {
+            try {
+                document.getElementById('display').value = eval(document.getElementById('display').value);
+            } catch {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+        function toggleSign() {
+            let display = document.getElementById('display');
+            if (display.value.startsWith('-')) {
+                display.value = display.value.substring(1);
+            } else {
+                display.value = '-' + display.value;
+            }
+        }
+    </script>
+</body>
+</html>
